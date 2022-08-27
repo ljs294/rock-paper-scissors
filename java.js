@@ -20,9 +20,9 @@ function playRound(playerSelection, computerSelection) {
 
     if (playerSelection === computerSelection) {
         message = 'It\'s a draw!';
-    } else if (playerSelection === 'rock' && computerSelection === 'paper' ||
-        playerSelection === 'paper' && computerSelection === 'scissors' ||
-        playerSelection === 'scissors' && computerSelection === 'rock') {
+    } else if (playerSelection === 'Rock' && computerSelection === 'Paper' ||
+        playerSelection === 'Paper' && computerSelection === 'Scissors' ||
+        playerSelection === 'Scissors' && computerSelection === 'Rock') {
         message = `You Lose! ${computerSelection} beats ${playerSelection}`;
         winner = 0;
     } else {
@@ -48,6 +48,13 @@ function game() {
         console.log(`Score is Player: ${playerScore}, Computer: ${compScore}`);
     }
 
+    if (playerScore > compScore) {
+        winner = `You beat the computer ${playerScore} to ${compScore}!`
+    } else if (playerScore < compScore) {
+        winner = `You lost to the computer ${compScore} to ${playerScore}!`
+    } else {
+        winner = `It\'s a Draw! Tied at ${playerScore} wins each.`
+    }
     return winner;
 }
 
