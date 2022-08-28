@@ -1,3 +1,12 @@
+let compWins = 0;
+let playerWins = 0;
+
+function newGame() {
+    compWins = 0;
+    playerWins = 0;
+}
+
+
 function getComputerChoice() {
     let rand = Math.random();
     let choice;
@@ -12,11 +21,10 @@ function getComputerChoice() {
     return choice;
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection, compWins, playerWins) {
     playerSelection = capitalize(playerSelection);
     computerSelection = capitalize(computerSelection);
     let message;
-    let winner = 2;
 
     if (playerSelection === computerSelection) {
         message = 'It\'s a draw!';
@@ -24,44 +32,52 @@ function playRound(playerSelection, computerSelection) {
         playerSelection === 'Paper' && computerSelection === 'Scissors' ||
         playerSelection === 'Scissors' && computerSelection === 'Rock') {
         message = `You Lose! ${computerSelection} beats ${playerSelection}`;
-        winner = 0;
+        compWins += 1;
     } else {
         message = `You Win! ${playerSelection} beats ${computerSelection}`;
-        winner = 1;
+        playerWins += 1;
     }
-    return [message,winner];
-}
 
-function game() {
-    let compScore = 0;
-    let playerScore = 0;
+    // CHECKING FOR END OF GAME CASE
 
-    for (let i = 0; i < 5; i++) {
-        result = playRound(prompt('Your Pick?'),getComputerChoice())
-        console.log(result[0]);
-        if (result[1] === 1) {
-            playerScore++;
-        } else if (result[1] === 0) {
-            compScore++;
+    if (playerWins > 4 || compWins > 4) {
+        if (compWins > playerWins) {
+            message = `The computer wins!`;
+        } else {
+            message = `You win!`;
         }
-
-        console.log(`Score is Player: ${playerScore}, Computer: ${compScore}`);
     }
 
-    if (playerScore > compScore) {
-        winner = `You beat the computer ${playerScore} to ${compScore}!`
-    } else if (playerScore < compScore) {
-        winner = `You lost to the computer ${compScore} to ${playerScore}!`
-    } else {
-        winner = `It\'s a Draw! Tied at ${playerScore} wins each.`
-    }
-    return winner;
+    document.getElementById('results').textContent = message;
+    return [compWins, playerWins];
 }
 
 function capitalize(string) {
     string = string.toLowerCase();
-    string = string.replace(string.charAt(0),string.charAt(0).toUpperCase());
+    string = string.replace(string.charAt(0), string.charAt(0).toUpperCase());
     return string;
 }
 
-console.log(game());
+const rpsButtons = document.querySelectorAll('.rps');
+rpsButtons.forEach(rps => rps.addEventListener('click', function (e) {
+    if (e.target.id === 'rock') {
+        [compWins, playerWins] = playRound('rock', getComputerChoice(),
+            compWins, playerWins);
+    } else if (e.target.id === 'paper') {
+        [compWins, playerWins] = playRound('paper', getComputerChoice(),
+            compWins, playerWins);
+    } else {
+        [compWins, playerWins] = playRound('scissors', getComputerChoice(),
+            compWins, playerWins);
+    }
+
+    score = `The score is Player: ${playerWins}, Computer: ${compWins}.`;
+    document.getElementById('scoreboard').textContent = score;
+}));
+
+const restart = document.querySelector('#new-game');
+restart.addEventListener('click', function(e) {
+    console.log(e.target);
+    newGame();
+    document.getElementById('scoreboard').textContent = `A new game has started!`;
+});

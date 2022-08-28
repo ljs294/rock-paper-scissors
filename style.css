@@ -1,0 +1,48 @@
+.rps {
+    min-width: 200px;
+    background-color: lightblue;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 32px;
+    border-style: solid;
+    border-radius: 4px;
+    box-shadow: 4px red;
+    margin: 64px 16px;
+    
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#data {
+    flex-direction: column;
+}
+
+#new-game {
+    background-color: salmon;
+    border-radius: 4px;
+    padding: 8px 32px;
+    border-style: solid;
+}
+
+#scoreboard {
+    margin: 8px;
+}
+
+#results {
+    margin: 8px;
+}
+
+#rock {
+}
+
+#paper {
+
+}
+
+#scissors {
+
+}
